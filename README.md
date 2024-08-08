@@ -29,7 +29,7 @@ git clone https://github.com/Olliewakeford/GuiTypingTesterProject.git
 2. Change into the project directory:
 
 ```bash
-cd AdvancedJavaProject
+cd GuiTypingTesterProject
 ```
 
 3. Build the project using Maven:
