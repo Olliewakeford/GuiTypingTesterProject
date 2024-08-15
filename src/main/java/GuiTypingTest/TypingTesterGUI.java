@@ -7,9 +7,14 @@ import GuiTypingTest.Testers.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * TypingTesterGUI is the main class for the Typing Tester application.
@@ -26,6 +31,10 @@ public class TypingTesterGUI {
     private int textOption;
     private int formatOption;
     private Timer timer;
+
+    // New fields for storing user data
+    private final ArrayList<Integer> speedHistory = new ArrayList<>();
+    private final ArrayList<Integer> accuracyHistory = new ArrayList<>();
 
     /**
      * Constructor for TypingTesterGUI.
@@ -97,6 +106,12 @@ public class TypingTesterGUI {
         });
         optionsPanel.add(startButton);
 
+        // Button to show graph
+        JButton graphButton = new JButton("Show Progress Graph");
+        styleButton(graphButton, new Color(70, 130, 180), Color.BLACK); // Blue background, black text
+        graphButton.addActionListener(e -> displayGraph());
+        optionsPanel.add(graphButton);
+
         frame.add(optionsPanel, BorderLayout.CENTER);
         frame.revalidate();
         frame.repaint();
@@ -121,7 +136,7 @@ public class TypingTesterGUI {
         inputField.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         JButton submitButton = new JButton("Submit");
-        styleButton(submitButton, new Color(70, 130, 180), Color.WHITE); // Blue background, white text
+        styleButton(submitButton, new Color(70, 130, 180), Color.BLACK); // Blue background, white text
 
         timeLabel = new JLabel("Time remaining: " + timeLimit / 1000 + " seconds", SwingConstants.CENTER);
         timeLabel.setOpaque(true);
@@ -203,13 +218,16 @@ public class TypingTesterGUI {
         }
         result = typingTest.completeTest();
         if (result != null) {
+            // Store the speed and accuracy in the lists
+            speedHistory.add(result.calculateSpeed());
+            accuracyHistory.add(result.calculateAccuracy());
+
             SwingUtilities.invokeLater(() -> {
                 frame.getContentPane().removeAll();
                 JPanel resultPanel = new JPanel();
                 resultPanel.setLayout(new BoxLayout(resultPanel, BoxLayout.Y_AXIS));
                 resultPanel.setBackground(new Color(240, 240, 240));
                 resultPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-
                 JLabel resultLabel = new JLabel("<html>" + result.toString().replace("\n", "<br>") + "</html>", SwingConstants.CENTER);
                 resultLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
                 resultPanel.add(resultLabel);
@@ -271,9 +289,9 @@ public class TypingTesterGUI {
     /**
      * Styles a JButton with background and text colors, and adds hover effects.
      *
-     * @param button the JButton to style
+     * @param button          the JButton to style
      * @param backgroundColor the background color
-     * @param textColor the text color
+     * @param textColor       the text color
      */
     private void styleButton(JButton button, Color backgroundColor, Color textColor) {
         button.setBackground(backgroundColor);
@@ -295,6 +313,33 @@ public class TypingTesterGUI {
     }
 
     /**
+     * Displays the progress graph for speed and accuracy.
+     */
+    private void displayGraph() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        for (int i = 0; i < speedHistory.size(); i++) {
+            dataset.addValue(speedHistory.get(i), "Speed", "Test " + (i + 1));
+            dataset.addValue(accuracyHistory.get(i), "Accuracy", "Test " + (i + 1));
+        }
+
+        JFreeChart lineChart = ChartFactory.createLineChart(
+                "Typing Test Progress",
+                "Test Number",
+                "Value",
+                dataset
+        );
+
+        ChartPanel chartPanel = new ChartPanel(lineChart);
+        chartPanel.setPreferredSize(new Dimension(800, 600));
+        JFrame graphFrame = new JFrame("Progress Graph");
+        graphFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        graphFrame.add(chartPanel);
+        graphFrame.pack();
+        graphFrame.setVisible(true);
+    }
+
+    /**
      * Main method to run the TypingTesterGUI application.
      *
      * @param args command line arguments
@@ -302,4 +347,5 @@ public class TypingTesterGUI {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(TypingTesterGUI::new);
     }
+
 }
