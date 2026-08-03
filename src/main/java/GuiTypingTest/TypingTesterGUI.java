@@ -339,13 +339,4 @@ public class TypingTesterGUI {
         graphFrame.setVisible(true);
     }
 
-    /**
-     * Main method to run the TypingTesterGUI application.
-     *
-     * @param args command line arguments
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(TypingTesterGUI::new);
-    }
-
 }
