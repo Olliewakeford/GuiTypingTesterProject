@@ -49,3 +49,7 @@ After starting the application, follow the prompts in the GUI to start a typing 
 
 ## Development
 This was developed for my course Advanced Java as the semester project.
+
+It's a rework of an earlier command-line version I built for a different course:
+[Typing-Tester](https://github.com/Olliewakeford/Typing-Tester). That one came first, this one
+swapped the terminal for a Swing GUI and added a progress graph.
