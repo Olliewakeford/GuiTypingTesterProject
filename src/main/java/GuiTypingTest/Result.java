@@ -16,6 +16,9 @@ public record Result(long testTime, int correctWords, int totalWords) {
      */
     public int calculateSpeed() {
         int seconds = (int) Math.floor((double) testTime / 1000);
+        if (seconds <= 0) {
+            return 0;
+        }
         return (int) ((double) correctWords / seconds * 60);
     }
 
