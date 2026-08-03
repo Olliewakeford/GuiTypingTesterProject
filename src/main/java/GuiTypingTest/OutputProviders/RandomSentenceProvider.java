@@ -28,7 +28,7 @@ public class RandomSentenceProvider implements TextToTypeProvider {
             //get a list of all words from the RandomWords.txt file
             words = Files.readAllLines(Paths.get(System.getProperty("user.dir") + "/TextResources/RandomWords.txt"));
         } catch (IOException e) {
-            Logger.getLogger(NonsenseSentenceProvider.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(RandomSentenceProvider.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

@@ -27,7 +27,7 @@ public class NormalSentenceProvider implements TextToTypeProvider {
             //get a list of all sentences from the NormalSentences.txt file
             sentences = Files.readAllLines(Paths.get(System.getProperty("user.dir") + "/TextResources/NormalSentences.txt"));
         } catch (IOException e) {
-            Logger.getLogger(NonsenseSentenceProvider.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NormalSentenceProvider.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

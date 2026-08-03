@@ -39,7 +39,7 @@ public class SingleWordsProvider implements TextToTypeProvider {
                 words = Files.readAllLines(Paths.get(System.getProperty("user.dir") + "/TextResources/NonsenseWords.txt"));
             }
         } catch (IOException e) {
-            Logger.getLogger(NonsenseSentenceProvider.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(SingleWordsProvider.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

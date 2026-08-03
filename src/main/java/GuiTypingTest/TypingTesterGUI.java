@@ -44,7 +44,7 @@ public class TypingTesterGUI {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            Logger.getLogger(NonsenseSentenceProvider.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TypingTesterGUI.class.getName()).log(Level.SEVERE, null, e);
         }
         frame = new JFrame("Typing Tester");
         frame.setLayout(new BorderLayout());
